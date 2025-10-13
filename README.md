@@ -20,3 +20,16 @@ set new password for ubuntu user
 $ sudo passwd ubuntu 
 - from laptop: $ ssh-copy-id ubuntu@\<public-ip-of-ec2>
 - passwordless authentication now enabled
+
+### Ansible inventory
+
+2 formats: inventory.ini or yaml
+to avoid passing path of inventory.ini, it can rather be stored at the default location: /etc/ansible/hosts
+
+Example adhoc command:
+$ ansible -i inventory.ini -m ping all
+-i - inventory location
+-m - module
+all - implement on all servers mentioned in inventory file
+$ ansible -i inventory.ini -m shell -a "apt install openjdk" all
+
