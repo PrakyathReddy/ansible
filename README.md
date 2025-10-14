@@ -224,7 +224,7 @@ verified on ec2 instance that:
 - index.html file exists in /var/www/html
 - service is running $ sudo systemctl status apache2
 
-![http-page](images/http-page.png)
+![http-page](./images/http-page.png)
 
 ### Roles
 
