@@ -325,3 +325,6 @@ add aws creds using vault command
 $ ansible-vault create group-vars/all/pass.yml --vault-password-file vault.pass
 
 this time, while running ansible-playbook command, need to pass in the password file to allow descryption
+
+ec2 creation Verified on console
+
