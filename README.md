@@ -224,7 +224,7 @@ verified on ec2 instance that:
 - index.html file exists in /var/www/html
 - service is running $ sudo systemctl status apache2
 
-![http-page](./images/http-page.png)
+![Apache HTTP Page](images/http-page.png)
 
 ### Roles
 
@@ -257,3 +257,31 @@ ok: [ubuntu@52.87.251.93]
 PLAY RECAP *******************************************************************************************************
 ubuntu@52.87.251.93        : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+
+### Galaxy
+
+login into galaxy.ansible.com<br>
+Roles > docker
+
+Will use Galaxy to install and configure Docker on my 2 managed nodes
+
+```bash
+ansible-galaxy role install bsmeding.docker
+```
+
+Where to find roles: `~/.ansible/roles`
+
+Create playbook which uses that role to install and configure docker on all my hosts
+
+```bash
+ansible-playbook -i inventory.ini playbook-docker.yaml
+```
+
+**Output:**
+```
+PLAY RECAP *********************************************************************
+ubuntu@13.218.146.223      : ok=26   changed=8    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0   
+ubuntu@52.87.251.93        : ok=26   changed=8    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0
+```
+
+Verified that docker running successfully on ec2 instances
