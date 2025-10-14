@@ -328,3 +328,13 @@ this time, while running ansible-playbook command, need to pass in the password 
 
 ec2 creation Verified on console
 
+Builtin modules - get installed on the managed nodes as modules. Managed nodes will have python which will then execute the modules
+Collections - used for infra provisions, network automation, etc., where we work with APIs. To talk to these API's, we use collections which containes roles, modules, etc., which get executed on local machine / control node. Each collection can have some pre-reqs like boto3 for AWS.
+
+### Variables
+
+There are 22 places in which you can declare variables using ansible.
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#id44:~:text=precedence%20rules.-,Understanding%20variable%20precedence,-%EF%83%81
+
+variable'zed the instance type by defining it in the defaults/main.yaml
+
