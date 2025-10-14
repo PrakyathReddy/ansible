@@ -317,3 +317,11 @@ login to galaxy \> collections \> namespaces \> amazon
 $ ansible-galaxy collection install amazon.aws
 $ pip install boto3
 boto3 is the python module which ansible uses to talk to the API of AWS
+
+setup vault: 
+$ openssl rand -base64 2048 > vault.pass
+
+add aws creds using vault command
+$ ansible-vault create group-vars/all/pass.yml --vault-password-file vault.pass
+
+this time, while running ansible-playbook command, need to pass in the password file to allow descryption
