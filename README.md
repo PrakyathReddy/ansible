@@ -307,3 +307,5 @@ To install my role:
 ```bash
 ansible-galaxy role install PrakyathReddy.ansible-galaxy-httpd-role
 ```
+
+![Galaxy Role](images/galaxy.png)
