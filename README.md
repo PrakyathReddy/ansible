@@ -338,3 +338,22 @@ https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#
 
 variable'zed the instance type by defining it in the defaults/main.yaml
 
+### Ansible loops
+
+provision 3 ec2 instances using ansible loops:
+- 2 instances with ubuntu distribution
+- 1 instance with amazon linux distro
+
+step 1: create AWS token and secret key to authenticate from ansible control node
+step 2: install boto3 on ansible control node
+$ pip3 install boto3
+step 3: setup vault
+$ openssl rand -base64 2048 >> vault.pass
+- add aws token and secret key to group_vars/all/pass.yaml
+$ ansible-vault create group_vars/all/pass.yaml --vault-password-file vault.pass
+step 4: create yaml file
+step 5: import aws collection. Referring to galaxy
+$ ansible-galaxy collection install amazon.aws
+step 6: create yaml file with ansible loop
+
+![loop](images/loop.png)

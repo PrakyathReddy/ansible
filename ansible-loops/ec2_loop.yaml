@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: create ec2 instances
+    amazon.aws.ec2_instance:
+      name: "{{ item.name }}"
+      key_name: "aws-key-for-ec2-us-east1"
+      instance_type: t3.micro
+      security_group: default
+      region: us-east-1
+      network_interfaces:
+        - assign_public_ip: true
+      image_id: "{{ item.image }}"
+      aws_access_key: "{{ aws_token }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+    loop:
+    - { name: "ubuntu-1", image: "ami-0360c520857e3138f" }
+    - { name: "ubuntu-2", image: "ami-0360c520857e3138f" }
+    - { name: "amazon-linux", image: "ami-052064a798f08f0d3"}
