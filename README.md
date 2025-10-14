@@ -309,3 +309,11 @@ ansible-galaxy role install PrakyathReddy.ansible-galaxy-httpd-role
 ```
 
 ![Galaxy Role](images/galaxy.png)
+
+### Create resources in AWS using Ansible
+
+login to galaxy \> collections \> namespaces \> amazon
+
+$ ansible-galaxy collection install amazon.aws
+$ pip install boto3
+boto3 is the python module which ansible uses to talk to the API of AWS

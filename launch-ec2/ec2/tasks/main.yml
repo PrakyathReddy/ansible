@@ -1,0 +1,15 @@
+---
+# tasks file for ec2-launch
+- name: start an instance with a public ip address
+  amazon.aws.ec2instance:
+    name: "ansible-instance"
+    instance_type: t2.micro
+    security_group: default
+    region: us-east-1
+    aws_access_key: "{{ec2_access_key}}"
+    aws_secret_key: "{{ec2_secret_key}}"
+    network:
+      assign_public_ip: true
+    image_id: ami-0360c520857e3138f
+    tags:
+      environment: testing
