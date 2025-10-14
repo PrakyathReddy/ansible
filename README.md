@@ -357,3 +357,7 @@ $ ansible-galaxy collection install amazon.aws
 step 6: create yaml file with ansible loop
 
 ![loop](images/loop.png)
+
+Setup passwordless authentication
+$ ssh-copy-id -f "-o IdentityFile ../../aws-key-for-ec2-us-east1.pem" ubuntu@54.235.23.115
+
