@@ -8,7 +8,7 @@ install ansible on the control node
 pip install --include-deps ansible
 ```
 
-ref: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements
+**ref:** https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements
 
 ### Practise exercise 1: Enable password-less authentication
 
@@ -48,7 +48,7 @@ ssh-copy-id ubuntu@<public-ip-of-ec2>
 
 ### Ansible inventory
 
-Ref: https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#intro-inventory
+**Ref:** https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#intro-inventory
 
 2 formats: inventory.ini or yaml
 
@@ -60,9 +60,9 @@ Example adhoc command:
 ansible -i inventory.ini -m ping all
 ```
 
--i - inventory location
--m - module
-all - implement on all servers mentioned in inventory file
+- `-i` - inventory location
+- `-m` - module  
+- `all` - implement on all servers mentioned in inventory file
 
 ```bash
 ansible -i inventory.ini -m shell -a "apt install openjdk" all
@@ -82,7 +82,7 @@ for simple tasks
 ansible -i [location-of-inventory-file] -m [module] -a [argument-to-module] [hosts-to-be-applied-on]
 ```
 
-Ref: https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html
+**Ref:** https://docs.ansible.com/ansible/latest/command_guide/intro_adhoc.html
 
 Reboot server
 
@@ -95,6 +95,9 @@ Transfer files
 ```bash
 ansible web -i inventory.ini -m ansible.builtin.copy -a "src=/etc/hosts dest=/tmp/hosts"
 ```
+
+**Output:**
+```json
 ubuntu@52.87.251.93 | CHANGED => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -112,12 +115,16 @@ ubuntu@52.87.251.93 | CHANGED => {
     "state": "file",
     "uid": 1000
 }
+```
 
 Ensure a package is installed without installing it
 
 ```bash
 ansible -i inventory.ini -m ansible.builtin.apt -a "name=acme state=present" web
 ```
+
+**Output:**
+```json
 ubuntu@52.87.251.93 | FAILED! => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -125,12 +132,16 @@ ubuntu@52.87.251.93 | FAILED! => {
     "changed": false,
     "msg": "No package matching 'acme' is available"
 }
+```
 
 Manage users
 
 ```bash
 ansible all -i inventory.ini -m ansible.builtin.user -a "name=foo state=absent"
 ```
+
+**Output:**
+```json
 ubuntu@52.87.251.93 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -147,12 +158,16 @@ ubuntu@13.218.146.223 | SUCCESS => {
     "name": "foo",
     "state": "absent"
 }
+```
 
 Manage services
 
 ```bash
 ansible all -m ansible.builtin.service -i inventory.ini -a "name=httpd state=stopped"
 ```
+
+**Output:**
+```json
 ubuntu@13.218.146.223 | FAILED! => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -167,6 +182,7 @@ ubuntu@52.87.251.93 | FAILED! => {
     "changed": false,
     "msg": "Could not find the requested service httpd: host"
 }
+```
 
 Complete details of setup:
 
@@ -184,9 +200,13 @@ install-apache.yaml
 modules ref: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
 most used ones: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html
 
-$ ansible-playbook -i inventory.ini install-apache.yaml  
+```bash
+ansible-playbook -i inventory.ini install-apache.yaml
+```
 
-PLAY [web] **********************************************************************************************************
+**Output:**
+```
+PLAY [web] *******************************************************************************************************
 
 TASK [Gathering Facts] **********************************************************************************************
 ok: [ubuntu@52.87.251.93]
@@ -206,3 +226,34 @@ verified on ec2 instance that:
 
 ![http-page](images/http-page.png)
 
+### Roles
+
+Re-organize above playbook, this time using roles
+$ ansible-galaxy role init playbook-using-roles
+
+Ref: https://galaxy.ansible.com/ui/
+
+copy tasks from /play-apache-install and paste in playbook-using-roles/tasks/main.yaml
+
+move index.html file into playbook-using-roles/files
+$ mv playbook-apache-install/index.html playbook-using-roles/files 
+
+update path to index.yaml in tasks/main.yaml src field
+
+Re-run:
+$ ansible-playbook -i inventory.ini install-apache.yaml 
+
+PLAY [web] *******************************************************************************************************
+
+TASK [Gathering Facts] *******************************************************************************************
+ok: [ubuntu@52.87.251.93]
+
+TASK [playbook-using-roles : install apache httpd] ***************************************************************
+ok: [ubuntu@52.87.251.93]
+
+TASK [playbook-using-roles : copy file with owner and permissions] ***********************************************
+ok: [ubuntu@52.87.251.93]
+
+PLAY RECAP *******************************************************************************************************
+ubuntu@52.87.251.93        : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
