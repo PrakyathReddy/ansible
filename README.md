@@ -312,29 +312,41 @@ ansible-galaxy role install PrakyathReddy.ansible-galaxy-httpd-role
 
 ### Create resources in AWS using Ansible
 
-login to galaxy \> collections \> namespaces \> amazon
+login to galaxy > collections > namespaces > amazon
 
-$ ansible-galaxy collection install amazon.aws
-$ pip install boto3
+```bash
+ansible-galaxy collection install amazon.aws
+```
+
+```bash
+pip install boto3
+```
+
 boto3 is the python module which ansible uses to talk to the API of AWS
 
-setup vault: 
-$ openssl rand -base64 2048 > vault.pass
+setup vault:
+
+```bash
+openssl rand -base64 2048 > vault.pass
+```
 
 add aws creds using vault command
-$ ansible-vault create group-vars/all/pass.yml --vault-password-file vault.pass
+
+```bash
+ansible-vault create group-vars/all/pass.yml --vault-password-file vault.pass
+```
 
 this time, while running ansible-playbook command, need to pass in the password file to allow descryption
 
 ec2 creation Verified on console
 
-Builtin modules - get installed on the managed nodes as modules. Managed nodes will have python which will then execute the modules
-Collections - used for infra provisions, network automation, etc., where we work with APIs. To talk to these API's, we use collections which containes roles, modules, etc., which get executed on local machine / control node. Each collection can have some pre-reqs like boto3 for AWS.
+**Builtin modules** - get installed on the managed nodes as modules. Managed nodes will have python which will then execute the modules<br>
+**Collections** - used for infra provisions, network automation, etc., where we work with APIs. To talk to these API's, we use collections which containes roles, modules, etc., which get executed on local machine / control node. Each collection can have some pre-reqs like boto3 for AWS.
 
 ### Variables
 
-There are 22 places in which you can declare variables using ansible.
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#id44:~:text=precedence%20rules.-,Understanding%20variable%20precedence,-%EF%83%81
+There are 22 places in which you can declare variables using ansible.<br>
+**Ref:** https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#id44:~:text=precedence%20rules.-,Understanding%20variable%20precedence,-%EF%83%81
 
 variable'zed the instance type by defining it in the defaults/main.yaml
 
@@ -344,20 +356,60 @@ provision 3 ec2 instances using ansible loops:
 - 2 instances with ubuntu distribution
 - 1 instance with amazon linux distro
 
-step 1: create AWS token and secret key to authenticate from ansible control node
-step 2: install boto3 on ansible control node
-$ pip3 install boto3
-step 3: setup vault
-$ openssl rand -base64 2048 >> vault.pass
+**step 1:** create AWS token and secret key to authenticate from ansible control node
+
+**step 2:** install boto3 on ansible control node
+
+```bash
+pip3 install boto3
+```
+
+**step 3:** setup vault
+
+```bash
+openssl rand -base64 2048 >> vault.pass
+```
+
 - add aws token and secret key to group_vars/all/pass.yaml
-$ ansible-vault create group_vars/all/pass.yaml --vault-password-file vault.pass
-step 4: create yaml file
-step 5: import aws collection. Referring to galaxy
-$ ansible-galaxy collection install amazon.aws
-step 6: create yaml file with ansible loop
+
+```bash
+ansible-vault create group_vars/all/pass.yaml --vault-password-file vault.pass
+```
+
+**step 4:** create yaml file
+
+**step 5:** import aws collection. Referring to galaxy
+
+```bash
+ansible-galaxy collection install amazon.aws
+```
+
+**step 6:** create yaml file with ansible loop
 
 ![loop](images/loop.png)
 
 Setup passwordless authentication
-$ ssh-copy-id -f "-o IdentityFile ../../aws-key-for-ec2-us-east1.pem" ubuntu@54.235.23.115
 
+```bash
+ssh-copy-id -f "-o IdentityFile ../../aws-key-for-ec2-us-east1.pem" ubuntu@54.235.23.115
+```
+
+### Ansible Conditionals
+
+create inventory.ini file<br>
+create the conditional file
+
+completed successfully:
+
+**Output:**
+```
+TASK [terminate an instance if its based on ubuntu] ****************************
+skipping: [ec2-user@54.157.30.123]
+changed: [ubuntu@54.235.23.115]
+changed: [ubuntu@54.81.130.150]
+
+PLAY RECAP *********************************************************************
+ec2-user@54.157.30.123     : ok=2    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+ubuntu@54.235.23.115       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+ubuntu@54.81.130.150       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```   
