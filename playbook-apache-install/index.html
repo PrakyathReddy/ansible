@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Ansible-Managed Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .info-card h3 {
+            margin-top: 0;
+            color: #ffeb3b;
+        }
+        .status {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        .footer {
+            margin-top: 2rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        .emoji {
+            font-size: 2rem;
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Welcome to My Server! 🚀</h1>
+        <p class="subtitle">Successfully deployed with Ansible automation</p>
+        
+        <div class="status">
+            <span class="emoji">✅</span>
+            Apache Server Running
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🔧 Deployed With</h3>
+                <p>Ansible Playbook</p>
+                <p>Apache Web Server</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🌐 Server Info</h3>
+                <p>Ubuntu EC2 Instance</p>
+                <p>Automated Configuration</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>📚 Learning</h3>
+                <p>Infrastructure as Code</p>
+                <p>Configuration Management</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎯 This page was automatically deployed using Ansible!</p>
+            <p>📅 Deployment Date: <strong id="currentDate"></strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Display current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+    </script>
+</body>
+</html>

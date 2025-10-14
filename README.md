@@ -174,3 +174,35 @@ Complete details of setup:
 ansible all -m ansible.builtin.setup -i inventory.ini
 ```
 
+### Playbooks
+
+Each playbook is a collection of plays 
+Ref: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html#playbook-execution:~:text=an%20Ansible%20module.-,Playbook%20execution,-%EF%83%81
+
+install-apache.yaml
+
+modules ref: https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+most used ones: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html
+
+$ ansible-playbook -i inventory.ini install-apache.yaml  
+
+PLAY [web] **********************************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************
+ok: [ubuntu@52.87.251.93]
+
+TASK [install apache httpd] *****************************************************************************************
+changed: [ubuntu@52.87.251.93]
+
+TASK [copy file with owner and permissions] *************************************************************************
+changed: [ubuntu@52.87.251.93]
+
+PLAY RECAP **********************************************************************************************************
+ubuntu@52.87.251.93        : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+verified on ec2 instance that:
+- index.html file exists in /var/www/html
+- service is running $ sudo systemctl status apache2
+
+![http-page](images/http-page.png)
+
