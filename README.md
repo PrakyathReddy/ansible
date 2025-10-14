@@ -285,3 +285,25 @@ ubuntu@52.87.251.93        : ok=26   changed=8    unreachable=0    failed=0    s
 ```
 
 Verified that docker running successfully on ec2 instances
+
+### publish install-apache role to galaxy
+
+Create new repo for the role<br>
+https://github.com/PrakyathReddy/ansible-galaxy-httpd-role
+
+push to galaxy:
+
+```bash
+ansible-galaxy import PrakyathReddy ansible-galaxy-httpd-role --token d66dce7a6addeccd3d30c3e3cf99a62f2c992fcd
+```
+
+token can be created for one time use on the galaxy UI
+
+Role can be accessed here:<br>
+https://galaxy.ansible.com/ui/standalone/roles/PrakyathReddy/ansible-galaxy-httpd-role/
+
+To install my role:
+
+```bash
+ansible-galaxy role install PrakyathReddy.ansible-galaxy-httpd-role
+```
