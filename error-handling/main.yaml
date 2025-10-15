@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false 
+
+  tasks:
+  - name: make sure the packages openssl and openssh are up to date
+    ansible.builtin.yum:
+      name: "{{ item }}"
+      state: latest
+    loop:
+      - openssh
+      - openssl
+      - tree
+      - cowsay
+      - randomshit
+    ignore_errors: yes
+  - name: verify if docker is installed
+    ansible.builtin.command: docker --version
+    register: output
+    ignore_errors: yes
+  - ansible.builtin.debug:
+      var: output
+  - name: install docker
+    ansible.builtin.yum:
+      name: docker
+      state: present
+    when:
+      output.failed == true

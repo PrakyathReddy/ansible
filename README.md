@@ -413,3 +413,15 @@ ec2-user@54.157.30.123     : ok=2    changed=0    unreachable=0    failed=0    s
 ubuntu@54.235.23.115       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ubuntu@54.81.130.150       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```   
+
+### Error handling
+
+Ansible handles tasks one after the other and will proceed only if a task is complete + successful
+
+this prevents task execution in further nodes. A workaround would be to handle those errors
+
+Example: error-handling\/main.yaml
+
+output of commands can be saved using "register"
+
+to print output, we can use ansible.builtin.debug
