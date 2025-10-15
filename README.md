@@ -442,3 +442,7 @@ decrypt, edit
 to call it inside playbooks: aws_token: "{{ aws_access_key }}"
 
 AWS Secrets Manager
+
+### Policy as code on AWS
+
+implement requirement for bucket versioning 
