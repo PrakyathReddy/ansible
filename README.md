@@ -425,3 +425,20 @@ Example: error-handling\/main.yaml
 output of commands can be saved using "register"
 
 to print output, we can use ansible.builtin.debug
+
+### ansible vault for security
+
+group_vars
+all
+pass.yaml
+
+create a password file for vault
+$ openssl rand -base64 2048 > vault.pass
+
+$ ansible-vault create aws-creds.yaml --vault-password-file vault.pass
+$ ansible-vault view aws-creds.yaml --vault-password-file vault.pass
+decrypt, edit
+
+to call it inside playbooks: aws_token: "{{ aws_access_key }}"
+
+AWS Secrets Manager
