@@ -1,0 +1,1 @@
+1. ansible_connection=local -> other options in inventory file - SSH, winrm, docker - local can also be used when running cloud api calls that don't need SSH
